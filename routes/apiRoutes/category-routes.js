@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { UPSERT } = require('sequelize/lib/types/lib/query-types');
+// const { UPSERT } = require('sequelize/lib/types/lib/query-types');
 const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
@@ -33,7 +33,8 @@ router.get('/:id', (req, res) => {
     attributes: ['id', 'category_name'],
     include: [
       { 
-        model: Product, attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+        model: Product, 
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
     ]
   })
