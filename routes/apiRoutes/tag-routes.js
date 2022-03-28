@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { redirect } = require('express/lib/response');
+// const { redirect } = require('express/lib/response');
 const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
-router.get('/api/tags', (req, res) => {
+router.get('/', (req, res) => {
   // find all tags
   Tag.findAll({
     attributes: ['id', 'tag_name'],
@@ -13,10 +13,6 @@ router.get('/api/tags', (req, res) => {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
-      {
-        model: ProductTag,
-        attributes: ['id', 'product_id', 'tag_id']
-      }
     ]
   })
     .then(dbTagData => res.json(dbTagData))
@@ -39,10 +35,6 @@ router.get('/:id', (req, res) => {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       },
-      {
-        model: ProductTag,
-        attributes: ['id', 'product_id', 'tag_id']
-      }
     ]
   })
     .then(dbTagData => {
@@ -61,7 +53,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create({
-    tag_name: req.params.tag_name
+    tag_name: req.body.tag_name
   })
     .then(dbTagData => res.json(dbTagData))
     .catch(err => {
